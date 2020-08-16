@@ -171,11 +171,22 @@ def PrintProjectsData(conn):
 
     return None
 
+def ProjectIsItFinished(project,conn):
 
+    """
+        This function returns True if the project is marked finished in
+        the database, otherwise it returns False.
 
+    """
 
+    return
 
+def StepIsItFinished(step,conn):
 
+    """
+        This function returns True if the step is marked finished in
+        the database, otherwise it returns False.
 
+    """
 
-PrintProjectsData(conn)
+    return
