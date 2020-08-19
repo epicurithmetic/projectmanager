@@ -76,7 +76,6 @@ def ProjectWithTopSteps(project,conn):
 
     return project_with_top_steps
 
-
 def DependentSteps(step,conn):
 
     """
@@ -99,12 +98,35 @@ def DependentSteps(step,conn):
 
     return dependent_steps
 
+
+def ProjectNestedSteps(project,conn):
+
+    """
+        This function outputs the steps, including nesting, for the input
+        project in the CodeProject.db database.
+
+    """
+
+    # Initialize the list with all of the steps for the project.
+    project_with_nested_steps = [project]
+
+    # Grab all of the top steps of the project.
+    project_with_top_steps = ProjectWithTopSteps(project,conn)
+    top_steps = project_with_top_steps[1]
+
+    for step in top_steps:
+        # For each top step, grab the dependent steps.
+        sub_steps = DependentSteps(step,conn)
+        nested_steps = [step, sub_steps]                # Collate the data.
+        project_with_nested_steps.append(nested_steps)  # Append to output.
+
+    return project_with_nested_steps
+
 def ProjectsNestedSteps(conn):
 
     """
-        Rewrite this into two functions. One of which does this
-        for a single project. The other calls the former function
-        for each project.
+        This function collects all of the projects, with their nested steps,
+        into a single output list. 
 
     """
 
@@ -116,29 +138,43 @@ def ProjectsNestedSteps(conn):
     for project in projects:
 
         # Initialize the list with all of the steps for the project.
-        project_with_nested_steps = [project]
-
-        # Grab all of the top steps of the project.
-        project_with_top_steps = ProjectWithTopSteps(project,conn)
-        top_steps = project_with_top_steps[1]
-
-        for step in top_steps:
-            # For each top step, grab the dependent steps.
-            sub_steps = DependentSteps(step,conn)
-            nested_steps = [step, sub_steps]                # Collate the data.
-            project_with_nested_steps.append(nested_steps)  # Append to output.
-
-        # Append project with step dependencies to the output data.
+        project_with_nested_steps = ProjectNestedSteps(project,conn)
         projects_with_main_steps.append(project_with_nested_steps)
 
     return projects_with_main_steps
 
+def PrintProjectData(project,conn):
+
+    """
+
+
+    """
+
+    # Grab the project and its nested step data.
+    project = ProjectNestedSteps(project,conn)
+
+    # Indent standard for printing.
+    indent = 5
+
+    # Print the project name.
+    print(" "*indent + "[ ]: " + project[0])
+
+    # Move onto the steps.
+    for step in project[1:]:
+
+        # Print the step name.
+        print(" "*(indent + 5) + "[ ]: " + step[0])
+
+        for sub_step in step[1]:
+            print(" "*(indent + 10) + "[ ]: " + sub_step)
+
+    print("\n")
+
+
 def PrintProjectsData(conn):
 
     """
-        Again, rewrite this into two functions. One which prints the data
-        of a single project. The other which calls the former to print
-        the data of all projects.
+
 
     """
 
@@ -146,30 +182,14 @@ def PrintProjectsData(conn):
     ProjectData = ProjectsNestedSteps(conn)
     number_of_projects = len(ProjectData)
 
-    # Indent for printing.
-    indent = 5
-
-    # Empty or cross.
-    finished = "[X]: "
-    not_finished = "[ ]: "
-
     for project in ProjectData:
 
-        # Print the project name.
-        print(" "*indent + "[ ]: " + project[0])
-
-        # Move onto the steps.
-        for step in project[1:]:
-
-            # Print the step name.
-            print(" "*(indent + 5) + "[ ]: " + step[0])
-
-            for sub_step in step[1]:
-                print(" "*(indent + 10) + "[ ]: " + sub_step)
-
-        print("\n")
-
+        # Print the project data.
+        PrintProjectData(project[0],conn)   # First element in list is the
+                                            # name of the project.
     return None
+
+
 
 def ProjectIsItFinished(project,conn):
 
