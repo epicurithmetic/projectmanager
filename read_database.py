@@ -6,6 +6,54 @@ import sqlite3
 
 conn = sqlite3.connect("CodeProjects.db")
 
+def ProjectIsItFinished(project,conn):
+
+    """
+        This function returns True if the project is marked finished in
+        the database, otherwise it returns False.
+
+    """
+
+    #rint(project)
+
+    # SQL command to insert.
+    sql_state_of_project = "SELECT State FROM Projects WHERE Project = '%s'" % project
+    # Set the cursor on the database and execute the command.
+    cur = conn.cursor()
+    cur.execute(sql_state_of_project)
+
+
+    state = cur.fetchall()
+    state = state[0][0]
+
+    if state == "F":
+        return True
+    else:
+        return False
+
+def StepIsItFinished(step,conn):
+
+    """
+        This function returns True if the step is marked finished in
+        the database, otherwise it returns False.
+
+    """
+    # SQL command to insert.
+    sql_state_of_step = "SELECT State FROM Steps WHERE Name = '%s'" % step
+    # Set the cursor on the database and execute the command.
+    cur = conn.cursor()
+    cur.execute(sql_state_of_step)
+
+    state = cur.fetchall()
+    state = state[0][0]
+
+    if state == "F":
+        return True
+    else:
+        return False
+
+
+
 def ProjectManagerProjects(conn):
 
     """
@@ -126,7 +174,7 @@ def ProjectsNestedSteps(conn):
 
     """
         This function collects all of the projects, with their nested steps,
-        into a single output list. 
+        into a single output list.
 
     """
 
@@ -155,18 +203,39 @@ def PrintProjectData(project,conn):
 
     # Indent standard for printing.
     indent = 5
+    on_going = "[ ]: "
+    finished = "[X]: "
 
-    # Print the project name.
-    print(" "*indent + "[ ]: " + project[0])
+    # Determine whether or not project has been completed:
+    isit_finished_project = ProjectIsItFinished(project[0],conn)
+
+    # Printed statement depends on whether finished or not.
+    if isit_finished_project == True:
+        print(" "*indent + finished + project[0] + "\n")
+    else:
+        print(" "*indent + on_going + project[0] + "\n")
 
     # Move onto the steps.
     for step in project[1:]:
 
-        # Print the step name.
-        print(" "*(indent + 5) + "[ ]: " + step[0])
+        # Determine whether or not the step is finished.
+        isit_finished_step = StepIsItFinished(step[0],conn)
 
-        for sub_step in step[1]:
-            print(" "*(indent + 10) + "[ ]: " + sub_step)
+        # Printed statement depends on whether the step is finished or not.
+        if isit_finished_step == True:
+            print(" "*(indent + 5) + finished + step[0])
+        else:
+            print(" "*(indent + 5) + on_going + step[0])
+
+        for substep in step[1]:
+
+            isit_finished_substep = StepIsItFinished(substep,conn)
+
+            # Printed statement depends on whether the step is finished or not.
+            if isit_finished_substep == True:
+                print(" "*(indent + 10) + finished + substep)
+            else:
+                print(" "*(indent + 10) + on_going + substep)
 
     print("\n")
 
@@ -189,24 +258,4 @@ def PrintProjectsData(conn):
                                             # name of the project.
     return None
 
-
-
-def ProjectIsItFinished(project,conn):
-
-    """
-        This function returns True if the project is marked finished in
-        the database, otherwise it returns False.
-
-    """
-
-    return
-
-def StepIsItFinished(step,conn):
-
-    """
-        This function returns True if the step is marked finished in
-        the database, otherwise it returns False.
-
-    """
-
-    return
+PrintProjectsData(conn)
