@@ -1,5 +1,11 @@
 # This script contains the classes used to keep track of the state in the
 # Project Manager console, as the user changes their needs from the database.
+import sqlite3
+from read_database import PrintProjectsData
+
+
+# Make a connection to the database.
+conn = sqlite3.connect("CodeProjects.db")
 
 
 # Classes are used to keep track of the different states the console can be in.
@@ -78,7 +84,7 @@ class HomeScreen():
 
         option_l = "[L]: Look up a project."
         option_u = "[U]: Update a project."
-        option_i = "[I]: Insert a new project or step in a project."
+        option_i = "[I]: Insert a new project or step into a project."
         option_r = "[R]: Remove a project."
         option_q = "[Q]: Quit the console."
         #option_h = "[H]: Return to the homescreen."
@@ -112,8 +118,97 @@ class HomeScreen():
 
         return True
 
+class LookUp():
+
+    """
 
 
+    """
+
+    def __init__(self):
+
+        """
+            This class is used to define the homescreen of the project
+            manager console. This class stores the options available to the
+            user at the homescreen.
+
+        """
+
+        self.state = "LookUp"
+        self.option = ""
+
+    def header(self):
+
+        """
+            This method prints a welcome header for the console home page.
+
+        """
+
+        x = "|||"
+        y = "-"
+        z = " "
+        w = "\n"
+
+        welcome_message = " Project Manager Console: Read Database. "
+        l_welcome = len(welcome_message)
+
+        print(x + 205*y + x)
+        print(3*w)
+
+        print(z*75 + x + l_welcome*y + x)
+        print(z*75 + x + welcome_message + x)
+        print(z*75 + x + l_welcome*y + x)
+
+
+    def explanation(self):
+
+        """
+
+
+        """
+
+        # Some definitions for "aesthetics".
+        x = "|||"
+        y = "-"
+        z = " "
+        w = "\n"
+
+        explanation_message_1 = z*10 + "This section of the console allows users read access"
+        explanation_message_2 = " to the project manager database."
+
+        print(w*3)
+        print(explanation_message_1 + explanation_message_2 + w*2)
+
+        # Because this section of the console has no option, we can
+        # update the state of the object to help determine what to do
+        # next in the main program.
+        self.option = "read"
+
+
+    def content(self):
+
+        """
+
+
+        """
+
+        # Provide the user with the project and steps database.
+        PrintProjectsData(conn)
+
+        # Once the content has been given, we need to provide
+        # options for the user to continue moving around the console.
+
+
+
+    def continue_program(self):
+
+        """
+            This method is used to keep track of whether or not the user
+            is finished accessing the database and wishes to close the console.
+
+        """
+
+        return True
 
 class Close():
 

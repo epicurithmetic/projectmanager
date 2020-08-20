@@ -23,14 +23,13 @@ def InsertProject(conn):
 
     project_data = (project_name, project_description, project_state)
 
-    # Check that project_name is the name of a project in the database. 
+    # Check that project_name is the name of a project in the database.
 
     with conn:
         cur = conn.cursor()
         cur.execute(inst_stmt,project_data)
 
     print("Project details have been inserted into the database.")
-
 
 def InsertStep(conn):
 

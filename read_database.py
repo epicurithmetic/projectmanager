@@ -52,8 +52,6 @@ def StepIsItFinished(step,conn):
     else:
         return False
 
-
-
 def ProjectManagerProjects(conn):
 
     """
@@ -146,7 +144,6 @@ def DependentSteps(step,conn):
 
     return dependent_steps
 
-
 def ProjectNestedSteps(project,conn):
 
     """
@@ -202,7 +199,7 @@ def PrintProjectData(project,conn):
     project = ProjectNestedSteps(project,conn)
 
     # Indent standard for printing.
-    indent = 5
+    indent = 15
     on_going = "[ ]: "
     finished = "[X]: "
 
@@ -239,7 +236,6 @@ def PrintProjectData(project,conn):
 
     print("\n")
 
-
 def PrintProjectsData(conn):
 
     """
@@ -257,5 +253,3 @@ def PrintProjectsData(conn):
         PrintProjectData(project[0],conn)   # First element in list is the
                                             # name of the project.
     return None
-
-PrintProjectsData(conn)
