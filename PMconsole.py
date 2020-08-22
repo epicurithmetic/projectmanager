@@ -92,6 +92,31 @@ if __name__ == "__main__":
                 # Otherwise, the user wants to quit the console.
                 user_state = Close()
 
+
+        elif user_state.state == "LookUp":
+
+            if user_state.option == "V":
+                print(w)
+                user_state.content()
+                # Now the user should be given another set of options.
+                # ... at this point we could "pause" waiting for the user to input "ENTER"
+                # after which point the user will be returned to the previous options.
+                return_message_1 = "When you finished reading the database, "
+                return_message_2 = "please press ENTER to return to the previous menu: "
+
+                print(w*2)
+                input(z*10 + return_message_1 + return_message_2)
+
+            elif user_state.option == "D":
+                print("This part of the console is not ready yet.")
+                user_state.option = ""
+
+            elif user_state.option == "H":
+                user_state = HomeScreen()
+
+            else:
+                user_state = Close()
+
         # For now, just close the console. Adjust this when other parts of the
         # console have been written.
         else:

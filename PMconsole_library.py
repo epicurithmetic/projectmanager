@@ -213,12 +213,28 @@ class LookUp():
         z = " "
         w = "\n"
 
-        # ... Use this method to provide the following options:
-        # [U]: Update an entry in the database.
-        # [D]: Get the description of a project/step. Specified by name.
-        # [H]: Return to homescreen()
-        # [Q]: Quit the console.
+        prompt = "Which of the following options would you like to perform?"
 
+        option_v = "[V]: View the entire database of code projects"
+        option_d = "[D]: View the details of a single project."
+        option_h = "[H]: Return to the home screen of the console."
+        option_q = "[Q]: Quit the project manager console."
+
+        options = [option_v,
+                   option_d,
+                   option_h,
+                   option_q]
+
+        # Start printing the options for the user.
+        print(w*2)
+        print(z*15 + prompt + w)
+        for o in options:
+            print(z*20 + o)
+
+        print(w)
+        user_option = input(z*15 + "Option: ")
+
+        return user_option
 
 
     def continue_program(self):

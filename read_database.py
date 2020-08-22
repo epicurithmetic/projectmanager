@@ -199,7 +199,7 @@ def PrintProjectData(project,conn):
     project = ProjectNestedSteps(project,conn)
 
     # Indent standard for printing.
-    indent = 15
+    indent = 25
     on_going = "[ ]: "
     finished = "[X]: "
 
