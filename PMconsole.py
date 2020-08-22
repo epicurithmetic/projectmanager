@@ -8,7 +8,7 @@ from PMconsole_library import LookUp
 from PMconsole_library import InsertData
 from PMconsole_library import Close
 
-# Load in the functions required to write and read data.
+# Load in the functions required to write and read data to the database.
 from write_database import InsertProject
 from write_database import InsertStep
 
@@ -38,27 +38,16 @@ if __name__ == "__main__":
         user_state.header()
         user_state.explanation()
 
-        # If there are options, then present them to the user.
-        if user_state.option == "":
-            user_option = user_state.options()
-        else:
-            # In this case there are no options to present, as the user has
-            # already specified what they want to see.
-            if user_state.option == "read":
-                user_state.content()
-
-                # Once the content has been given, we can output the
-                # option for where the user wants to go next and update
-                # the state, ready for the piece of code.
+        user_state.option = user_state.options()
 
         # At this point the user has chosen an option. We need to act on the option
         # But this action depends on the state of the user i.e. where they are in the console.
         if user_state.state == "Home":
 
             # In this case, the user has chosen an option on the HomeScreen()
-            if user_option == "L":
-                user_state = LookUp()
-            elif user_option == "I":
+            if user_state.option == "L":
+                user_state = LookUp()             # In the future this can be updated to include
+            elif user_state.option == "I":        # more look-up options: single project, description etc.
                 user_state = InsertData()
             else:
                 user_state = Close()
@@ -67,7 +56,7 @@ if __name__ == "__main__":
         # In this case, the user has chosen an option on the InsertData() module.
         elif user_state.state == "InsertData":
 
-            if user_option == "P":
+            if user_state.option == "P":
                 # The user wants to write a new project.
                 continue_writing = True                     # Loop until all projects written.
                 while continue_writing == True:
@@ -81,7 +70,7 @@ if __name__ == "__main__":
                     else:                                   # User is retured to HomeScreen()
                         pass
 
-            elif user_option == "S":
+            elif user_state.option == "S":
                 # The user wants to write a new step.
                 continue_writing = True                     # Loop until all steps written.
                 while continue_writing == True:
@@ -95,7 +84,7 @@ if __name__ == "__main__":
                     else:                                   # User is retured to HomeScreen()
                         pass
 
-            elif user_option == "H":
+            elif user_state.option == "H":
                 # In this case, the user wants to return to the homescreen.
                 user_state = HomeScreen()
 

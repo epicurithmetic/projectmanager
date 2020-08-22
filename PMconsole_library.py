@@ -213,7 +213,11 @@ class LookUp():
         z = " "
         w = "\n"
 
-        
+        # ... Use this method to provide the following options:
+        # [U]: Update an entry in the database.
+        # [D]: Get the description of a project/step. Specified by name.
+        # [H]: Return to homescreen()
+        # [Q]: Quit the console.
 
 
 
