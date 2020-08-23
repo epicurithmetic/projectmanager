@@ -179,10 +179,10 @@ class LookUp():
         print(w*3)
         print(explanation_message_1 + explanation_message_2 + w*2)
 
-        # Because this section of the console has no option, we can
-        # update the state of the object to help determine what to do
-        # next in the main program.
-        self.option = "read"
+        # # Because this section of the console has no option, we can
+        # # update the state of the object to help determine what to do
+        # # next in the main program.
+        # self.option = "read"
 
 
     def content(self):
