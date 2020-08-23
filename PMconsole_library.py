@@ -3,10 +3,8 @@
 import sqlite3
 from read_database import PrintProjectsData
 
-
 # Make a connection to the database.
 conn = sqlite3.connect("CodeProjects.db")
-
 
 # Classes are used to keep track of the different states the console can be in.
 class HomeScreen():
@@ -178,11 +176,6 @@ class LookUp():
 
         print(w*3)
         print(explanation_message_1 + explanation_message_2 + w*2)
-
-        # # Because this section of the console has no option, we can
-        # # update the state of the object to help determine what to do
-        # # next in the main program.
-        # self.option = "read"
 
 
     def content(self):
@@ -376,7 +369,7 @@ class Close():
         """
 
         self.state = "Close"
-        self.option = "Quit"
+        self.option = ""
 
     def header(self):
 
@@ -385,7 +378,7 @@ class Close():
         z = " "
         w = "\n"
 
-        exit_message = " Thank you for visiting the Project Manager console."
+        exit_message = " Thank you for visiting the Project Manager Console."
         l_exit = len(exit_message)
 
         print(x + 205*y + x)

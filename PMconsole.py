@@ -38,9 +38,9 @@ if __name__ == "__main__":
         user_state.header()
         user_state.explanation()
 
-        if user_state.option == "":
-            user_state.option = user_state.options()
-        else:
+        if user_state.option == "":                     # This if-else block can be used to return
+            user_state.option = user_state.options()    # the user to the main menu of the current state.
+        else:                                           # Otherwise, the option will be performed.
             pass
 
         # At this point the user has chosen an option. We need to act on the option
@@ -104,18 +104,17 @@ if __name__ == "__main__":
                 # Now the user should be given another set of options.
                 # ... at this point we could "pause" waiting for the user to input "ENTER"
                 # after which point the user will be returned to the previous options.
-                return_message_1 = "When you have finished reading the database, "
-                return_message_2 = "Enter [D] for the details of a single project, "
-                return_message_3 = "[H] to return home, or [Q] to quit the console: "
+                return_message_1 = "Enter [D] for the details of a single project, "
+                return_message_2 = "[H] to return home, or [Q] to quit the console: "
 
                 print(w*2)
-                user_state.option = input(z*10 + return_message_1 + return_message_2 + return_message_3)
+                user_state.option = input(z*10 + return_message_1 + return_message_2)
 
 
             elif user_state.option == "D":
                 print("This part of the console is not ready yet.")
-                user_state.option = ""
-                input("Press ENTER to continue.")
+                user_state.option = ""                                  # This option acts to take the user
+                input("Press ENTER to return to the previous menu: ")   # back to the LookUp options.
 
             elif user_state.option == "H":
                 user_state = HomeScreen()
@@ -127,3 +126,7 @@ if __name__ == "__main__":
         # console have been written.
         else:
             user_state = Close()
+
+    # Sign-off message.
+    os.system('clear')
+    user_state.header()
